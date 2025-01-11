@@ -1,2 +1,59 @@
-<h1>Nelson Muchonji Bifwoli</h1>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quisquam ducimus, non ut animi blanditiis tempore expedita aut dicta alias accusamus asperiores perspiciatis consequatur doloremque dolores praesentium optio possimus maxime.</p>
+<p class="display-2">Welcome to CSE Motors!</p>
+
+<!-- hero section -->
+<section id="hero-section">
+  <div id="banner-info">
+    <p class="display-3">DMC Delorean</p>
+    <p>3 Cup holders</p>
+    <p>Superman doors</p>
+    <p>Fuzzy dice!</p>
+    <img id="own-btn" src="/images/site/own_today.png"/>
+  </div>
+</section>
+
+  <!-- upgrades & review -->
+  <section id="upgrades-review">
+    <!-- upgrades -->
+    <% 
+      let upgrades = [
+        {name: 'Flux Capacitor', image: '/images/upgrades/flux-cap.png'},
+        {name: 'Flame Decals', image: '/images/upgrades/flame.jpg'},
+        {name: 'Bumper Stickers', image: '/images/upgrades/bumper_sticker.jpg'},
+        {name: 'Hub Caps', image: '/images/upgrades/hub-cap.jpg'},
+      ]
+    %>
+
+  <div class="col">
+    <p class="display-3">Delorean Upgrades</p>
+    <div id="upgrades-grid">
+      <% for (const upgrade of upgrades) { %>
+        <div>
+          <div class="card">
+            <img src=<%= upgrade.image %> alt=<%= upgrade.name %> />
+          </div>
+          <a href="#"><%= upgrade.name %></a>
+        </div>
+      <% } %> 
+    </div>
+  </div>
+
+  <!-- reviews -->
+  <% 
+  let reviews = [
+    '"So fast it\'s almost like travelling in time." (4/5)',
+    '"Coolest ride on the road." (4/5)',
+    '"I\'m feeling McFly!" (5/5)',
+    '"The most futuristic ride of our day." (4.5/5)',
+    '"80\'s livin and I love it!." (5/5)',
+  ]
+  %>
+  <div class="col">
+  <p class="display-3">DMC Delorean Reviews</p>
+  <ul id="reviews">
+    <% for (const review of reviews) {%>
+      <li><%= review %></li>
+    <%}%>
+  </ul>
+  </div>
+
+ </section>

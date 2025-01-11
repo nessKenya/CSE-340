@@ -1,6 +1,167 @@
-/******* Change Box Model ***************/
+/*** Change Box Model *****/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.siteName > a {
+  text-decoration: none;
+  font-size: 1.75rem;
+  color: black;
+  font-weight: bold;
+}
+
+#tools > a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: black;
+  font-size: 0.875rem;
+}
+
+nav > ul {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  background-color: black;
+  color: white;
+}
+
+#hero-section {
+  background-image: url("/images/vehicles/delorean-tn.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 2rem;
+}
+
+#banner-info {
+  display: inline-block;
+  background: #fffa;
+  color: #4986f7;
+}
+
+#banner-info > p {
+  margin: 0.25rem 0;
+}
+
+#upgrades-review {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+#upgrades-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 1rem;
+  text-align: center; /* center card links */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #4986f7;
+  height: 90px;
+}
+
+.display-1 {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.display-2 {
+  font-weight: bold;
+  font-size: 1.375rem;
+}
+
+.display-3 {
+  font-weight: bolder;
+  font-size: 1.125rem;
+}
+
+/* button {
+  border: 0;
+  background-color: cornflowerblue;
+  font-weight: bold;
+  padding:  .375rem;
+  box-shadow: 2px 2px #000a;
+} */
+
+#own-btn {
+  height: 32px;
+}
+
+.text-center {
+ text-align: center;
+}
+
+
+@media screen and (min-width: 768px) {
+  body {
+    background: url('/images/site/small_check.jpg')
+  }
+
+
+  #wrapper {
+    width: 70%;
+    margin: auto;
+    background: white;
+    border: 8px solid #4986f7;
+    border-radius: 0.75rem;
+    padding: 1rem;
+  }
+
+  #hero-section {
+    background-image: url("/images/vehicles/delorean.jpg");
+  }
+
+  #banner-info {
+    display: block;
+    width: 35%;
+    background: #fffa;
+    color: #4986f7;
+    height: 255px;
+  }
+
+  #banner-info > p {
+    margin: 0.5rem 0;
+    font-size: larger;
+  }
+
+  #own-btn {
+    height: 48px;
+  }
+
+  #upgrades-review {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #4986f7;
+    height: 90px;
+  }
+
+  .col {
+    flex: 1;
+  }
+
+  #reviews {
+    line-height: 2.5rem;
+  }
 }
