@@ -1,9 +1,9 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
 
-/* ************************
+/* ********
  * Constructs the nav HTML unordered list
- ************************** */
+ ********** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
   let list = "<ul>"
@@ -24,9 +24,9 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-/* **************************************
+/* **************
 * Build the classification view HTML
-* ************************************ */
+* ************ */
 Util.buildClassificationGrid = async function(data){
   let grid
   if(data.length > 0){
@@ -57,11 +57,49 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
-/* ****************************************
+/* **************
+* Build the specific inventory view Template
+* ************ */
+Util.createSpecificInventoryDetailsTemplate = async function(data) {
+  let template = `
+    <div id="details-container">
+      <div id="image-container" class="col">
+        <img src="${data.inv_image}" alt="${data.inv_make} - ${data.inv_model} picture" id="main-img"/>
+      </div>
+
+      <div id="info-card" class="col">
+        <h2>${data.inv_year} ${data.inv_make} ${data.inv_model}, ${data.inv_color}</h2>
+        <div id="price-banner">
+          <div id="section-mileage" class="col">
+            <span id="mileage-tag">MILEAGE</span><br/>
+            <b>${Intl.NumberFormat().format(data.inv_miles)}</b>
+          </div>
+
+          <h3 class="col-2">No-Haggle Price</h3>
+
+          <div class="col">
+          <h3>${Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(data.inv_price)}</h3>
+          <p>Does not include taxes.</p>
+          <p>ESTIMATE PAYMENTS</p>
+          </div>
+        </div>
+        <p><b>Make:</b> ${data.inv_make}</p>
+        <p><b>Model:</b> ${data.inv_model}</p>
+        <p><b>Color:</b> ${data.inv_color}</p>
+        <p><b>Mileage:</b> ${data.inv_miles}</p>
+        <p><b>Description:</b><br>${data.inv_description}</p>
+      </div>
+    </div>
+  `
+  return template;
+}
+
+
+/* **************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
- **************************************** */
+ ************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util
