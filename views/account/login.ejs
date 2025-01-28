@@ -1,0 +1,23 @@
+<!-- Account Login -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- display a message -->
+<%- messages() %>
+
+<!-- Login Form -->
+<div id="accountForm">
+<form class="input-box" id="loginForm" action="/account/login" method="post">
+    <label>Email<input type="email" name="account_email" required autocomplete="email" value="<%= locals.account_email %>"></label>
+    <label>Password<input type="password" name="account_password" id="password" required autocomplete="current-password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$"><span class="reveal-button active" id="passwordShow">Show Password</span></label>
+    <input type="submit" value="LOGIN" class="submitButton">
+</form>
+<div id="noAccount">
+    <span >No account? <a href="/account/register" class="signUp">Sign up</a></span>
+</div>
+</div>
+
+<script src="/js/script.js"></script>

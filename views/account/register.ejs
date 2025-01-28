@@ -1,0 +1,31 @@
+<!-- Account Login -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- display a message -->
+<%- messages() %>
+
+<!-- Registration Form -->
+<div id="registrationForm">
+<form class="input-box" action="/account/register" method="post">
+    <label>First name<input type="text" name="account_firstname" required autocomplete="given-name" value="<%= locals.account_firstname %>"></label>
+    <label>Last name<input type="text" name="account_lastname" required autocomplete="family-name" value="<%= locals.account_lastname %>"></label>
+    <label>Email<input type="email" name="account_email" required autocomplete="email" value="<%= locals.account_email %>"></label>
+    <label>Password<input type="password" name="account_password" id="password" required autocomplete="current-password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$"><span class="reveal-button active" id="passwordShow">Show Password</span></label>
+    <input type="submit" value="REGISTER" class="submitButton">
+</form>
+    <p class="passwordIntro">
+        The password must be:
+    </p>
+    <ul class="passwordIntro">
+        <li>12 characters in length, minimum</li>
+        <li>Contain at least 1 capital letter</li>
+        <li>Contain at least 1 number</li>
+        <li>Contain at least 1 special character</li>
+    </ul>
+</div>
+
+<script src="/js/script.js"></script>
