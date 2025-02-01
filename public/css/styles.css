@@ -232,7 +232,7 @@ hr {
 }
 
 #price-banner p {
-  color: #4986f7;
+  color: #000306;
 }
 
 #section-mileage {
@@ -383,4 +383,8 @@ input:invalid {
 .success-text {
   color: green;
   font-weight: bold;
+}
+
+#estimateHaggle{
+  color: black;
 }
