@@ -36,8 +36,8 @@ Util.buildClassificationGrid = async function(data){
       grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
       + 'details"><img src="' + vehicle.inv_thumbnail 
-      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
-      +' on CSE Motors" /></a>'
+      +'" alt="Image of '+ vehicle.inv_model 
+      +' /></a>'
       grid += '<div class="namePrice">'
       grid += '<hr />'
       grid += '<h2>'
@@ -64,7 +64,7 @@ Util.createSpecificInventoryDetailsTemplate = async function(data) {
   let template = `
     <div id="details-container">
       <div id="image-container" class="col">
-        <img src="${data.inv_image}" alt="${data.inv_model}-picture" id="main-img"/>
+        <img src="${data.inv_image}" alt="${data.inv_make} - ${data.inv_model} picture" id="main-img"/>
       </div>
 
       <div id="info-card" class="col">
