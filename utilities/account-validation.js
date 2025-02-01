@@ -14,16 +14,13 @@ const utilities = require(".")
         .trim()
         .escape()
         .notEmpty().withMessage('First name is empty.')
-        .isLength({ min: 1 })
         .withMessage("Please provide a first name."), // on error this message is sent.
   
       // lastname is required and must be string
       body("account_lastname")
         .trim()
         .escape()
-        .notEmpty().withMessage('Last name is empty.')
-        .isLength({ min: 2 })
-        .withMessage("Please provide a last name."), // on error this message is sent.
+        .isLength({ min: 3 }).withMessage('Last name must be 2 characters or more'), // on error this message is sent.
   
       // valid email is required and cannot already exist in the database
       body("account_email")

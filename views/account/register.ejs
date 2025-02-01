@@ -19,8 +19,8 @@
 <div id="registrationForm">
 <p class="allRequired">FILL ALL THE FIELDS</p>
 <form class="input-box" action="/account/register" method="post">
-    <label>First name<input type="text" name="account_firstname" id="accountFirstname" required autocomplete="given-name" value="<%= locals.account_firstname %>"></label>
-    <label>Last name<input type="text" name="account_lastname" id="lastFirstname" required autocomplete="family-name" value="<%= locals.account_lastname %>"></label>
+    <label>First name<input type="text" name="account_firstname" placeholder="Minimum 1 character" id="accountFirstname" required autocomplete="given-name" value="<%= locals.account_firstname %>"></label>
+    <label>Last name<input type="text" name="account_lastname" minlength="2" placeholder="Minimum 2 characters" id="lastFirstname" required autocomplete="family-name" value="<%= locals.account_lastname %>"></label>
     <label>Email<input type="email" name="account_email" id="accountEmail" required autocomplete="email" value="<%= locals.account_email %>"></label>
     <label>Password <input type="password" name="account_password" id="password" required autocomplete="current-password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><span class="reveal-button active" id="passwordShow">Show Password</span></label>
     <input type="submit" value="REGISTER" class="submitButton">

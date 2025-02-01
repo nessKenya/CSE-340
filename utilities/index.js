@@ -64,7 +64,7 @@ Util.createSpecificInventoryDetailsTemplate = async function(data) {
   let template = `
     <div id="details-container">
       <div id="image-container" class="col">
-        <img src="${data.inv_image}" alt="${data.inv_make} - ${data.inv_model} picture" id="main-img"/>
+        <img src="${data.inv_image}" alt="${data.inv_model}-picture" id="main-img"/>
       </div>
 
       <div id="info-card" class="col">

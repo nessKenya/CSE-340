@@ -36,13 +36,13 @@ validate.inventoryRules = () => {
     .trim()
     .escape()
     .notEmpty().withMessage('Make required.')
-    .isLength({ min: 3 })
+    .isLength({ min: 3 }).withMessage('Make must be 3 characters or more')
     .matches(/^[A-Za-z0-9]+$/).withMessage('Make should have no spaces or special characters'),
     body("inv_model")
     .trim()
     .escape()
     .notEmpty().withMessage('Model required.')
-    .isLength({ min: 3 })
+    .isLength({ min: 3 }).withMessage('Model must be 3 characters or more')
     .matches(/^[A-Za-z0-9]+$/).withMessage('Model should have no spaces or special characters'),
     body("inv_year")
     .trim()

@@ -316,7 +316,7 @@ select{
   margin-left: 2rem;
 }
 
-label{
+label, .descpriptionColor{
   color: white;
   font-size: 18px;
 }
@@ -383,8 +383,4 @@ input:invalid {
 .success-text {
   color: green;
   font-weight: bold;
-}
-
-#estimateHaggle{
-  color: black;
 }
