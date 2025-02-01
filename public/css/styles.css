@@ -316,7 +316,7 @@ select{
   margin-left: 2rem;
 }
 
-label, .descpriptionColor{
+label{
   color: white;
   font-size: 18px;
 }

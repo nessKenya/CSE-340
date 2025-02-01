@@ -12,13 +12,15 @@
 
 <div class="form-container">
 <form class="input-box" id="addInventory" action="/inv/add/inventory" method="post">
-  <span class="descpriptionColor">Classification<%- classificationDropDown %></span>
+  <label for="classificationList">Classification</label>
+  <%- classificationDropDown %>
   <label>Make<input type="text" name="inv_make" pattern="^[A-Za-z0-9]+$" minlength="3" placeholder="min 3 characters"  value="<%= locals.inv_make %>" required></label>
   <label>Model<input type="text" name="inv_model" pattern="^[A-Za-z0-9]+$" minlength="3" placeholder="min 3 characters"  value="<%= locals.inv_model %>" required></label>
   <label>Year<input type="text" name="inv_year" pattern="^\d+$"  value="<%= locals.inv_year %>" required></label>
-  <span class="descpriptionColor">
+  <label for="description">
     Description
-    <textarea 
+  </label>
+    <textarea id="description"
       name="inv_description" 
       maxlength="250"
       rows="7"
@@ -26,7 +28,6 @@
       >
       <%- locals.inv_description%>
     </textarea>
-  </span>
   <label>Price<input type="text" name="inv_price" pattern="^[0-9]+$"  value="<%= locals.inv_price %>" required></label>
   <label>Miles<input type="text" name="inv_miles" pattern="^[0-9]+$"  value="<%= locals.inv_miles %>" required></label>
   <label>Color<input type="text" name="inv_color" pattern="^[A-Za-z0-9]+$"  value="<%= locals.inv_color %>" required></label>
