@@ -1,0 +1,38 @@
+<h1><%= title %></h1>
+
+<!-- display errors -->
+
+<% if (errors) { %>
+    <ul class="warningDetails">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<div class="form-container">
+<form class="input-box" id="addInventory" action="/inv/add/inventory" method="post">
+  <label>Classification<%- classificationDropDown %></label>
+  <label>Make<input type="text" name="inv_make" pattern="^[A-Za-z0-9]+$"  value="<%= locals.inv_make %>" required></label>
+  <label>Model<input type="text" name="inv_model" pattern="^[A-Za-z0-9]+$"  value="<%= locals.inv_model %>" required></label>
+  <label>Year<input type="text" name="inv_year" pattern="^\d+$"  value="<%= locals.inv_year %>" required></label>
+  <label>
+    Description
+    <textarea 
+      type="text" 
+      name="inv_description" 
+      maxlength="250"
+      rows="7"
+      required
+      >
+      <%- locals.inv_description%>
+    </textarea>
+  </label>
+  <label>Price<input type="number" name="inv_price" pattern="^[A-Za-z0-9]+$"  value="<%= locals.inv_price %>" required></label>
+  <label>Miles<input type="number" name="inv_miles" pattern="^[A-Za-z0-9]+$"  value="<%= locals.inv_miles %>" required></label>
+  <label>Color<input type="text" name="inv_color" pattern="^[A-Za-z0-9]+$"  value="<%= locals.inv_color %>" required></label>
+  <label>Image<input type="text" name="inv_image" value="/images/vehicles/no-image.png" required></label>
+  <label>Thumbnail<input type="text" name="inv_thumbnail" value="/images/vehicles/no-image-tn.png" required></label>
+  <input type="submit" value="ADD" class="submitButton">
+</form>
+</div>
