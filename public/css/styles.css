@@ -380,7 +380,7 @@ input:invalid {
   background-color: #fdd;
 }
 
-.success-text {
+.success-text, .logedAlert {
   color: green;
   font-weight: bold;
 }

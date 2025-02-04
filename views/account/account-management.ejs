@@ -1,0 +1,18 @@
+<!-- Account Login -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- display a message -->
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="warningDetails">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+<h3 class="logedAlert">You're logged in</h3>

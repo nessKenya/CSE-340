@@ -19,7 +19,7 @@
 <div id="accountForm">
 <form class="input-box" id="loginForm" action="/account/login" method="post">
     <label>Email<input type="email" name="account_email" required autocomplete="email" value="<%= locals.account_email %>"></label>
-    <label>Password<input type="password" name="account_password" id="password" required autocomplete="current-password" pattern="^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[^a-zA-Z0-9])(?!.*\s).{12,}$"><span class="reveal-button active" id="passwordShow">Show Password</span></label>
+    <label>Password<input type="password" name="account_password" id="password" required autocomplete="current-password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><span class="reveal-button active" id="passwordShow">Show Password</span></label>
     <input type="submit" value="LOGIN" class="submitButton">
 </form>
 <div id="noAccount">

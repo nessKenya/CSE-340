@@ -18,6 +18,7 @@ const session = require("express-session")
 const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 
 
 /* ***********************
@@ -44,6 +45,12 @@ app.use(function(req, res, next){
 //body-parser Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+//the cookieParser Middleware
+app.use(cookieParser())
+
+//jsonwebtoken" and "dotenv" Middleware
+app.use(utilities.checkJWTToken)
 
 /* *********
  * View Engine and Templates
