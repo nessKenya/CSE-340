@@ -22,7 +22,7 @@ router.get("/register", utilities.handleErrors(accountController.buildRegister))
 /* *********************
 * Deliver Account View
 * *********************/
-router.get("/", utilities.handleErrors(accountController.buildAccount));
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccount))
 
 /* *********************
 * Enable the Registration
