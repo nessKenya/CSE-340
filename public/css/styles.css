@@ -304,7 +304,7 @@ select{
   border-radius: 10px;
 }
 
-.submitButton {
+.submitButton, button {
   background: white;
   color: #354b64;
   padding: 0.5rem 1.5rem;

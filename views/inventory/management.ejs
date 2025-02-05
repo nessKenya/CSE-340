@@ -3,7 +3,16 @@
 <!-- display message -->
 <p class="success-text"><%- message %></p>
 
-<hr>
 <a href="/inv/add-classification">Add New Classification</a><br>
 <a href="/inv/add-inventory">Add New Inventory</a>
+<hr>
+<h2>Manage Inventory</h2>
+<% if (notice) { %>
+  <p class="success-text"><%= notice %></p>
+<% } %>
+<p>Choose a classification to view those inventory items.</p>
+<%- classificationSelect %>
+<table id="inventoryDisplay"></table>
+<noscript>JavaScript must be enabled to use this page.</noscript>
+<script src="../../js/inventory.js"></script>
 <hr>

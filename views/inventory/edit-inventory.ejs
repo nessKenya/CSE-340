@@ -11,9 +11,9 @@
 <% } %>
 
 <div class="form-container">
-<form class="input-box" id="addInventory" action="/inv/add/inventory" method="post">
+<form class="input-box" id="updateForm" action="/inv/update" method="post">
   <label for="classificationList">Classification</label>
-  <%- classificationDropDown %>
+  <%- classificationSelect %>
   <label>Make<input type="text" name="inv_make" pattern="^[A-Za-z0-9 ]+$" minlength="3" placeholder="min 3 characters"  value="<%= locals.inv_make %>" required></label>
   <label>Model<input type="text" name="inv_model" pattern="^[A-Za-z0-9 ]+$" minlength="3" placeholder="min 3 characters"  value="<%= locals.inv_model %>" required></label>
   <label>Year<input type="text" name="inv_year" pattern="^\d+$"  value="<%= locals.inv_year %>" required></label>
@@ -33,6 +33,10 @@
   <label>Color<input type="text" name="inv_color" pattern="^[A-Za-z0-9]+$"  value="<%= locals.inv_color %>" required></label>
   <label>Image<input type="text" name="inv_image" value="/images/vehicles/no-image.png" required></label>
   <label>Thumbnail<input type="text" name="inv_thumbnail" value="/images/vehicles/no-image-tn.png" required></label>
-  <input type="submit" value="ADD" class="submitButton">
+  <button type="submit" disabled>Update Vehicle</button>
+  <input type="hidden" name="inv_id"
+  <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+  <% } %>>
 </form>
+<script src="../../js/inv-update.js"></script>
 </div>
