@@ -1,0 +1,64 @@
+<!-- Account Update -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+  
+  <!-- display a message -->
+  <%- messages() %>
+  <% if (errors) { %>
+    <ul class="warningDetails">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+  
+  <% if (notice) { %>
+    <p class="warningDetails"><%= notice %></p>
+  <% } %>
+  
+  <!-- Account Update Form -->
+  <div id="accountUpdateForm">
+    <h3>Change Account Details</h3>  
+    <hr>
+    <form class="form-container" action="/account/update" method="post">
+      <p class="allRequired">ALL THE FIELDS ARE REQUIRED</p>
+      <label>First name<input type="text" name="account_firstname" placeholder="Minimum 1 character" id="accountFirstname" required autocomplete="given-name" value="<%= locals.account_firstname %>"></label>
+      <label>Last name<input type="text" name="account_lastname" minlength="2" placeholder="Minimum 2 characters" id="lastFirstname" required autocomplete="family-name" value="<%= locals.account_lastname %>"></label>
+      <label>Email<input type="email" name="account_email" id="accountEmail" required autocomplete="email" value="<%= locals.account_email %>"></label>
+      <input type="submit" value="UPDATE ACCOUNT" class="submitButton">
+      <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>"/>
+    </form>
+  
+  
+    <h3>Change your password</h3>  
+    <hr>
+    <!-- password errors -->
+    <% if (passwordErrors) { %>
+      <ul class="warningDetails">
+     <% passwordErrors.array().forEach(error => { %>
+       <li><%= error.msg %></li>
+    <%  }) %>
+     </ul>
+    <% } %>
+  
+    <!-- Password Change Form -->
+    <form class="form-container" action="/account/change-password" method="post">
+      <label>Password <input type="password" name="account_password" id="password" required autocomplete="current-password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><span class="reveal-button active" id="passwordShow">Show Password</span></label>
+      <input type="submit" value="CHANGE PASSWORD" class="submitButton">
+      <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>"/>
+    </form>
+    <p class="passwordIntro">
+        The password must be:
+    </p>
+    <ul class="passwordIntro">
+        <li>12 characters in length, minimum</li>
+        <li>Contain at least 1 capital letter</li>
+        <li>Contain at least 1 number</li>
+        <li>Contain at least 1 special character</li>
+    </ul>
+  </div>
+  
+  <script src="/js/script.js"></script>

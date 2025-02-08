@@ -2,14 +2,14 @@ const pool = require("../database/")
 
 /* **
 * Get all classification data
-***/
+*/
 async function getClassifications() {
     return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
 
 /* **
 * Get specific classification
-***/
+*/
 async function checkExistingClassification(classification_id){
   try {
     const sql = "SELECT * FROM public.classification WHERE classification_id = $1"
@@ -55,7 +55,7 @@ async function getInventoryById(inventory_id) {
 
 /* **
 * Add new classification
-***/
+*/
 async function addNewClassification(classificationName) {
   try {
     const data = await pool.query(`INSERT INTO public.classification (classification_name) VALUES ($1)`, [classificationName])
@@ -67,7 +67,7 @@ async function addNewClassification(classificationName) {
 
 /* **
 * Add new classification
-***/
+*/
 async function addNewVehicle(inv_make, inv_model, inv_year, inv_description, inv_price, inv_thumbnail, inv_image, classification_id, inv_miles, inv_color) {
   try {
     const data = await pool.query(`INSERT INTO public.inventory (
@@ -79,9 +79,9 @@ async function addNewVehicle(inv_make, inv_model, inv_year, inv_description, inv
   }
 }
 
-/* *********
+/* ***
  *  Update Inventory Data
- * ********** */
+ * **** */
 async function updateInventory(
   inv_id,
   inv_make,
@@ -117,4 +117,17 @@ async function updateInventory(
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, addNewClassification, addNewVehicle, checkExistingClassification, updateInventory};
+/* ***
+ *  Delete Inventory Item
+ * **** */
+async function deleteInventoryItem(inv_id) {
+  try {
+    const sql ='DELETE FROM inventory WHERE inv_id = $1'
+    const data = await pool.query(sql, [inv_id])
+    return data
+  } catch (error) {
+    console.error("Delete inventory error: " + error)
+  }
+}
+
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, addNewClassification, addNewVehicle, checkExistingClassification, updateInventory, deleteInventoryItem};

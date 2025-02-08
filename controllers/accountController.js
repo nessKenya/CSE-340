@@ -1,15 +1,15 @@
-/* ***
+/* *
  * Account Controller Require Statements
- ***/
+ */
 const utilities = require('../utilities')
 const accountModel = require('../models/account-model')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
-/* **************
+/* ******
 *  Deliver login view
-* ************* */
+* ***** */
 async function buildLogin(req, res, next) {
     let nav = await utilities.getNav()
     res.render("account/login", {
@@ -19,9 +19,9 @@ async function buildLogin(req, res, next) {
     })
   }
 
-/* **************
+/* ******
 *  Deliver registration view
-* ************* */
+* ***** */
 async function buildRegister(req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/register", {
@@ -31,21 +31,22 @@ async function buildRegister(req, res, next) {
   })
 }
 
-/* **************
+/* ******
 *  Deliver account view
-* ************* */
+* ***** */
 async function buildAccount(req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/account-management", {
     title: "Account Management",
     nav,
     errors: null,
+    message: null,
   })
 }
 
-/* **************
+/* ******
 *  Process Registration
-* ************* */
+* ***** */
 async function registerAccount(req, res) {
   let nav = await utilities.getNav()
   const { account_firstname, account_lastname, account_email, account_password } = req.body
@@ -91,9 +92,9 @@ async function registerAccount(req, res) {
   }
 }
 
-/* ****************************************
+/* **************
  *  Process login request
- * ************************************ */
+ * ************ */
 async function accountLogin(req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
@@ -133,5 +134,104 @@ async function accountLogin(req, res) {
   }
 }
 
+/* **************
+ *  Render account update view
+ * ************ */
+async function updateAccountView(req, res) {
+  const {acc_id} = req.params
+  let nav = await utilities.getNav()
+  let {account_id, account_email, account_firstname, account_lastname} = await accountModel.getAccountById(parseInt(acc_id))
+  res.render("account/update-account", {
+    title: "Update Account Credentials",
+    nav,
+    errors: null,
+    passwordErrors: null,
+    account_firstname,
+    account_lastname,
+    account_email
+  })
+}
+
+/* **************
+ *  Update account details
+ * ************ */
+async function updateAccountDetails(req, res) {
+  const {account_firstname, account_lastname, account_email, account_id} = req.body
+  let nav = await utilities.getNav()
+  let updatedAccount = await accountModel.updateAccount(account_firstname, account_lastname, account_email, parseInt(account_id))
+  if(updatedAccount) {
+    let message = "Account details updated successfully!"
+    res.render("account/account-management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+      message,
+      account_firstname,
+      account_lastname,
+      account_email
+    })
+  } else {
+    req.flash("notice", "Sorry, account update failed.")
+    res.status(501).render("account/update-account", {
+      title: "Update Account Credentials",
+      nav,
+      errors: null,
+      passwordErrors: null,
+      account_firstname,
+      account_lastname,
+      account_email
+    })
+  }
+}
+
+/* **************
+ *  Change account password
+ * ************ */
+async function changeAccountPassword(req, res) {
+  const {account_password, account_id} = req.body
+  let nav = await utilities.getNav()
+  
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the password change.')
+    res.status(500).render("account/update-account", {
+      title: "Update Account Credentials",
+      nav,
+      errors: null,
+    })
+  }
+  let updatedAccount = await accountModel.changePassword(hashedPassword, parseInt(account_id))
+  if(updatedAccount) {
+    let message = "Password changed successfully!"
+    res.render("account/account-management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+      message,
+    })
+  } else {
+    let { account_firstname, account_lastname, account_email} = await accountModel.getAccountById(account_id)
+    req.flash("notice", "Sorry, password change failed.")
+    res.status(501).render("account/update-account", {
+      title: "Update Account Credentials",
+      nav,
+      errors: null,
+      passwordErrors: null,
+      account_firstname,
+      account_lastname,
+      account_email
+    })
+  }
+}
+
+async function logout(req, res) {
+  res.clearCookie('jwt');
+  res.redirect('/')
+}
+
 //export the functions for use elsewhere
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildAccount}
+module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildAccount, updateAccountView, updateAccountDetails, changeAccountPassword, logout}

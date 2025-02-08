@@ -18,3 +18,10 @@ account_firstname: Manager
 account_lastname: User
 account_email: manager@340.edu
 account_password: I@mAnAdm!n1strat0r
+
+Information 4
+----------------------------
+account_firstname: Soccer
+account_lastname: Tumandulo
+account_email: iamFanatic@340.edu
+account_password: I@mTum0lol1Client2

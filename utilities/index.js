@@ -4,9 +4,9 @@ const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
-/* ****
+/* **
  * Constructs the nav HTML unordered list
- **** */
+ ** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
   let list = "<ul>"
@@ -27,9 +27,9 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-/* ******
+/* **
 * Build the classification view HTML
-* **** */
+* ** */
 Util.buildClassificationGrid = async function(data){
   let grid
   if(data.length > 0){
@@ -60,9 +60,9 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
-/* ******
+/* **
 * Build the specific inventory view Template
-* **** */
+* ** */
 Util.createSpecificInventoryDetailsTemplate = async function(data) {
   let template = `
     <div id="details-container">
@@ -97,9 +97,9 @@ Util.createSpecificInventoryDetailsTemplate = async function(data) {
   return template;
 }
 
-/* ******
+/* **
 * Classification list dropdown.
-* **** */
+* ** */
 Util.buildClassificationList = async function (classification_id = null) {
   let data = await invModel.getClassifications()
   let classificationList =
@@ -119,9 +119,9 @@ Util.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
-/* ****************************************
+/* **************
 * Middleware to check token validity
-**************************************** */
+************** */
 Util.checkJWTToken = (req, res, next) => {
   if (req.cookies.jwt) {
    jwt.verify(
@@ -138,13 +138,15 @@ Util.checkJWTToken = (req, res, next) => {
      next()
     })
   } else {
-   next()
+    res.locals.accountData = null
+    res.locals.loggedin = null
+    next()
   }
  }
 
- /* ****************************************
+ /* **************
  *  Check Login
- * ************************************ */
+ * ************ */
  Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
     next()
@@ -154,11 +156,24 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
-/* ******
+/* **************
+*  Only Allow Administrators 'Staff'
+* ************ */
+Util.isAdmin = (req, res, next) => {
+  const {loggedin, accountData} = res.locals
+  if (loggedin && accountData && (accountData.account_type === 'Admin' || accountData.account_type === 'Employee')) {
+    next()
+  } else {
+    req.flash("warningDetails", "Please login as an administrator to access the page.")
+    return res.redirect("/account/login")
+  }
+}
+
+/* **
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
- ****** */
+ ** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util
