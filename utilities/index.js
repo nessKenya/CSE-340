@@ -64,6 +64,7 @@ Util.buildClassificationGrid = async function(data){
 * Build the specific inventory view Template
 * ** */
 Util.createSpecificInventoryDetailsTemplate = async function(data) {
+  const commentsLink = `/inv/comments/${data.inv_id}`
   let template = `
     <div id="details-container">
       <div id="image-container" class="col">
@@ -91,6 +92,7 @@ Util.createSpecificInventoryDetailsTemplate = async function(data) {
         <p><b>Color:</b> ${data.inv_color}</p>
         <p><b>Mileage:</b> ${data.inv_miles}</p>
         <p><b>Description:</b><br>${data.inv_description}</p>
+        <a href=${commentsLink}>View Comments</a>
       </div>
     </div>
   `
@@ -119,9 +121,9 @@ Util.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
-/* **************
+/* ******
 * Middleware to check token validity
-************** */
+****** */
 Util.checkJWTToken = (req, res, next) => {
   if (req.cookies.jwt) {
    jwt.verify(
@@ -144,9 +146,9 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
- /* **************
+ /* ******
  *  Check Login
- * ************ */
+ * **** */
  Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
     next()
@@ -156,9 +158,9 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
-/* **************
+/* ******
 *  Only Allow Administrators 'Staff'
-* ************ */
+* **** */
 Util.isAdmin = (req, res, next) => {
   const {loggedin, accountData} = res.locals
   if (loggedin && accountData && (accountData.account_type === 'Admin' || accountData.account_type === 'Employee')) {

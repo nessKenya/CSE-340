@@ -27,7 +27,11 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 // Route to edit specific inventory item
 router.get("/edit/:inventoryId", utilities.isAdmin, utilities.handleErrors(invController.viewEditInventory))
 
+// Route to view delete form
 router.get("/delete/:inv_id", utilities.isAdmin, utilities.handleErrors(invController.viewDeleteInventory))
+
+// Route to view inventory comments
+router.get("/comments/:inv_id", utilities.handleErrors(invController.viewInventoryComments))
 
 // Route to submit new classification data
 router.post(
@@ -52,10 +56,18 @@ router.post(
   utilities.isAdmin,
   validator.inventoryRules(),
   validator.checkUpdateData,
-  invController.updateInventory
+  utilities.handleErrors(invController.updateInventory)
 )
 
 // Route to delete a specified vehicle
 router.post("/delete", utilities.isAdmin, utilities.handleErrors(invController.deleteInventory))
+
+// Route to add commment
+router.post(
+  "/add-comment",
+  validator.commentRules(),
+  validator.checkCommmentData,
+  utilities.handleErrors(invController.addNewCommment)
+)
 
 module.exports = router;

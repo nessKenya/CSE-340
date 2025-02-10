@@ -132,4 +132,53 @@ validate.checkUpdateData = async (req, res, next) => {
   next()
 }
 
+validate.commentRules = () => {
+  return [
+    body("comment_text")
+    .trim()
+    .escape()
+    .notEmpty().withMessage('Comment required.'),
+    body("rating")
+    .trim()
+    .escape()
+    .notEmpty().withMessage('Rating required.')
+    .matches(/^\d+$/).withMessage('Rating should be a number.')
+    .isInt({max: 5, min: 1}).withMessage('Rating should be minimum 1 and maximum 5')
+  ]
+}
+
+validate.checkCommmentData = async (req, res, next) => {
+  const inv_id = parseInt(req.body.vehicle_id)
+  let nav = await utilities.getNav()
+  const inventory = await inventoryModel.getInventoryById(inv_id)
+  const title = `${inventory.inv_make} ${inventory.inv_model} ${inventory.inv_year}`
+  const vehicleBanner = inventory.inv_image
+  const comments = await inventoryModel.getComments(inv_id)
+  let averageRating = 0
+  if(comments.length > 0) {
+    averageRating = parseFloat(comments[0].average_rating).toFixed(1)
+  }
+  const {
+    rating, comment_text
+  } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("inventory/comments", {
+      nav,
+      errors,
+      title,
+      vehicleBanner,
+      averageRating,
+      comments,
+      vehicle_id: inventory.inv_id,
+      rating,
+      comment_text
+    })
+    return
+  }
+  next()
+}
+
 module.exports = validate

@@ -86,6 +86,7 @@ invCont.addInventory = async function(req, res, next) {
   } = req.body
   const data = await invModel.addNewVehicle(inv_make, inv_model, inv_year, inv_description, inv_price, inv_thumbnail, inv_image, classification_id, inv_miles, inv_color)
   let nav = await utilities.getNav()
+  const classificationSelect = await utilities.buildClassificationList()
   if(data) {
     message = `${inv_make} ${inv_model} was added successfully`
   } else {
@@ -96,12 +97,13 @@ invCont.addInventory = async function(req, res, next) {
     nav,
     message,
     errors: null,
+    classificationSelect
   })
 }
 
-/* ***
+/* *
  *  Return Inventory by Classification As JSON
- * **** */
+ * ** */
 invCont.getInventoryJSON = async (req, res, next) => {
   const classification_id = parseInt(req.params.classification_id)
   const invData = await invModel.getInventoryByClassificationId(classification_id)
@@ -112,9 +114,9 @@ invCont.getInventoryJSON = async (req, res, next) => {
   }
 }
 
-/* ***
+/* *
  *  Update View For Inventory Data
- * **** */
+ * ** */
 invCont.viewEditInventory = async (req, res, next) => {
   const inv_id = parseInt(req.params.inventoryId)
   let nav = await utilities.getNav()
@@ -140,9 +142,9 @@ invCont.viewEditInventory = async (req, res, next) => {
   })
 }
 
-/* ***
+/* *
  *  Update Inventory Data
- * **** */
+ * ** */
 invCont.updateInventory = async function(req, res, next) {
   let nav = await utilities.getNav()
   const {
@@ -200,9 +202,9 @@ invCont.updateInventory = async function(req, res, next) {
   }
 }
 
-/* ***
+/* *
  *  Delete View For Inventory Data
- * **** */
+ * ** */
 invCont.viewDeleteInventory = async (req, res, next) => {
   const inv_id = parseInt(req.params.inv_id)
   let nav = await utilities.getNav()
@@ -226,9 +228,9 @@ invCont.viewDeleteInventory = async (req, res, next) => {
   })
 }
 
-/* ***
+/* *
  *  Delete Inventory Data
- * **** */
+ * ** */
 invCont.deleteInventory = async function(req, res, next) {
   let nav = await utilities.getNav()
   const {
@@ -260,6 +262,69 @@ invCont.deleteInventory = async function(req, res, next) {
     inv_price,
     })
   }
+}
+
+
+/* *
+ *  Comments View For Inventory
+ * ** */
+invCont.viewInventoryComments = async (req, res, next) => {
+  const inv_id = parseInt(req.params.inv_id)
+  let nav = await utilities.getNav()
+  const inventory = await invModel.getInventoryById(inv_id)
+  const title = `${inventory.inv_make} ${inventory.inv_model} ${inventory.inv_year}`
+  const vehicleBanner = inventory.inv_image
+  const comments = await invModel.getComments(inv_id)
+  let averageRating = 0
+  if(comments.length > 0) {
+    averageRating = parseFloat(comments[0].average_rating).toFixed(1)
+  }
+  res.render("./inventory/comments", {
+    nav,
+    errors: null,
+    title,
+    vehicleBanner,
+    averageRating,
+    comments,
+    vehicle_id: inventory.inv_id
+  })
+}
+
+
+/* *
+ *  Add comment
+ * ** */
+invCont.addNewCommment = async function(req, res, next) {
+  let message
+  const {
+    rating, comment_text, vehicle_id, commentator_id
+  } = req.body
+  const data = await invModel.addComment(rating, comment_text, vehicle_id, commentator_id)
+  if(data) {
+    message = `Comment added was added successfully`
+  } else {
+    message = null
+  }
+  const inv_id = parseInt(vehicle_id)
+  let nav = await utilities.getNav()
+  const inventory = await invModel.getInventoryById(inv_id)
+  const title = `${inventory.inv_make} ${inventory.inv_model} ${inventory.inv_year}`
+  const vehicleBanner = inventory.inv_image
+  const comments = await invModel.getComments(inv_id)
+  let averageRating = 0
+  if(comments.length > 0) {
+    averageRating = parseFloat(comments[0].average_rating).toFixed(1)
+  }
+  res.render('./inventory/comments', {
+    title,
+    nav,
+    message,
+    errors: null,
+    vehicleBanner,
+    averageRating,
+    comments,
+    vehicle_id: inventory.inv_id
+  })
 }
 
 module.exports = invCont

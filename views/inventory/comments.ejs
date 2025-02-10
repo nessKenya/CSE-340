@@ -1,0 +1,56 @@
+<h1><%- title %> comments.</h1>
+
+<div id="comments-container">
+  <img class="vehicle-banner" src="<%- vehicleBanner %>" alt="vehicle image">
+<hr>
+  <% if (comments.length > 0) { %>
+    <h2>Average Rating: <%= averageRating %> out of 5</h2>
+    <% for (const comment of comments) { %>
+      <div class="comment-box">
+        <p class="capitalize">| <%= comment.firstname %> <%= comment.lastname %></p>
+        <p><%- comment.comment_text %></p>
+        <p>| <%= comment.comment_rating %> out of 5</p>
+        <p class="timePost"><%= comment.timestamp %></p>
+      </div>
+    <% } %>
+  <%} else {%>
+      <p>No comments for this vehicle yet.</p>
+  <% } %>
+
+
+  <!-- display errors -->
+<% if (errors) { %>
+  <ul class="warningDetails">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+<% if (loggedin) { %>
+<div class="form-container">
+  <form class="input-box" id="addCommentForm" action="/inv/add-comment" method="post">
+    <label for="description">
+      Comment
+    </label>
+    <textarea id="description"
+      name="comment_text" 
+      maxlength="250"
+      rows="7"
+      required><%- locals.comment_text%></textarea>
+    <label>Rating out of 5<input type="number" name="rating" value="<%= locals.rating %>" required max=5 min=1></label>
+    <button type="submit">Add Comment</button>
+    <input type="hidden" name="vehicle_id" value="<%= vehicle_id %>">
+    <input type="hidden" name="commentator_id" value="<%= accountData.account_id %>">
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>
+  </form>
+</div>
+
+<% } else { %>
+<a href="/account/login">Login in to make a comment</a>
+<%}%>
+
+
+</div>
+
+<hr>

@@ -79,9 +79,9 @@ async function addNewVehicle(inv_make, inv_model, inv_year, inv_description, inv
   }
 }
 
-/* ***
+/* *
  *  Update Inventory Data
- * **** */
+ * ** */
 async function updateInventory(
   inv_id,
   inv_make,
@@ -117,9 +117,9 @@ async function updateInventory(
   }
 }
 
-/* ***
+/* *
  *  Delete Inventory Item
- * **** */
+ * ** */
 async function deleteInventoryItem(inv_id) {
   try {
     const sql ='DELETE FROM inventory WHERE inv_id = $1'
@@ -130,4 +130,42 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, addNewClassification, addNewVehicle, checkExistingClassification, updateInventory, deleteInventoryItem};
+/* *
+ *  Get Comments For a Vehicle Item
+ * ** */
+async function getComments(inv_id) {
+  try {
+    const sql = `SELECT 
+                    c.comment_id AS comment_id,
+                    c.comment_text AS comment_text,
+                    c.rating AS comment_rating,
+                    c.timestamp,
+                    i.inv_id AS inventory_id,
+                    a.account_id AS account_id,
+                    a.account_firstname AS firstname,
+                    a.account_lastname AS lastname,
+                    AVG(c.rating) OVER (PARTITION BY c.vehicle_id) AS average_rating
+                FROM comment c
+                JOIN inventory i ON c.vehicle_id = i.inv_id
+                JOIN account a ON c.commentator_id = a.account_id
+                WHERE c.vehicle_id = $1;`
+    const data = await pool.query(sql, [inv_id])
+    return data.rows
+  } catch (error) {
+    console.error("Get comments error: " + error)
+  }
+}
+
+// add new comment
+async function addComment(rating, comment_text, vehicle_id, commentator_id) {
+  try {
+    const data = await pool.query(`INSERT INTO public.comment (
+      rating, comment_text, vehicle_id, commentator_id
+      ) VALUES ($1, $2, $3, $4)`, [rating, comment_text, vehicle_id, commentator_id])
+    return data;
+  } catch (error) {
+    console.error("addNewComment error" + error)
+  }
+}
+
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, addNewClassification, addNewVehicle, checkExistingClassification, updateInventory, deleteInventoryItem, getComments, addComment};

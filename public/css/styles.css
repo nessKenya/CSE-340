@@ -383,3 +383,23 @@ input:invalid {
   color: green;
   font-weight: bold;
 }
+
+.vehicle-banner {
+  width: 100%;
+}
+
+.comment-box {
+  padding: 1rem;
+  border: 2px solid #0004;
+  margin-bottom: 1rem;
+}
+
+.capitalize {
+  text-transform: uppercase;
+}
+
+.timePost{
+  color: green;
+  font-family: Arial, 'Times New Roman', Helvetica, Tahoma;
+  font-size: 14px;
+}

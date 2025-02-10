@@ -1,0 +1,42 @@
+** ## Project Enhancement Details** 
+__Access to the project__
+1. When you open the product details page
+2. Below product description, there is view comments link
+3. On clicking, comments of the given vehicle show, the selected vehicle
+4. One can add their comment, which is a review of the vehicle
+5. One can view other comments and an average rating as well
+
+
+_____________________________________________________________________________________________________
+** # Project Enhancement Expectation**
+Explain how your enhancement will make use of each of the following:
+1. __Database Interaction:__
+First, I created a new table called comment with the following parameters:
+a. comment_id
+b. rating 
+c. comment_text
+d. timestamp
+e. vehicle_id
+f. commentator_id
+Second, I queried the new table by adding an async function in the inventory-model file.
+
+2. __New Model Behaviors:__
+- New SQL query for the comment was added to the inventory-model file 
+
+3. __New Controller Behaviors:__ 
+- In the invController file, a function for viewing comment and adding a new comment was added 
+- Post and Get routes were added in the inventoryRoute file 
+
+4. __New Views:__ 
+- In Utilities root file, a comment link was added under the templates function 
+- An ejs comment file was added to the inventory folder and the code for displaying comment 
+to the client added 
+
+5. __Data Validation:__ 
+-In ejs comment file added in the views, required was added for client side validation to prevent the 
+client from submitting empty comment 
+- A server side validation was added to return the error wit the necessary message to te client. 
+The function checkCommmentData was added for this purpose in the inventory-validation file 
+
+6. __Error Handling:__ 
+Middleware for handling error added 
